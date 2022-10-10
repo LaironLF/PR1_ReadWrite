@@ -1,4 +1,6 @@
 from io import TextIOWrapper
+from os import system
+system('cls')
 ### ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ###
 
 
@@ -8,22 +10,26 @@ def writeFile():
         while True:
             print("Введите через пробел данные: фамилия, имя, отчество, год рождения", "Для выхода напишите - exit", end="\n")
             n = input()
-            if(n == 'exit'): break
+            if(n == 'exit'):
+                system('cls') 
+                break
             
             try: writeFileProccess(db, n)
-            except Exception as e: print(e)
+            except Exception as e:
+                system('cls') 
+                print(e)
 
 def writeFileProccess(db : TextIOWrapper, n : str):
     a = [i for i in n.split()]
     if len(a) != 4: raise Exception("Введите 4 элемента: Фамилия, Имя, Отчество, Год рождения")
-    try: 
-        int(a[len(a)-1])
+    try: int(a[len(a)-1])
+    except: raise Exception("Год должен состоять из чисел")
+    else:
         for line in a:
             db.write(line)
             db.write(" ")
         db.write("\n")
-        print("☆ ☆ ☆ Данные успешно записаны! ☆ ☆ ☆")
-    except: raise Exception("Год должен состоять из чисел")
+        raise Exception("☆ ☆ ☆ Данные успешно записаны! ☆ ☆ ☆")
     
 
     
@@ -41,7 +47,9 @@ def readFile():
                 n=db.readline()
         print("exit - выход")
         n = input()
-        if(n == 'exit'): break
+        if(n == 'exit'): 
+            system('cls')
+            break
 
 def readFilePretty():
     pass                
@@ -51,12 +59,13 @@ while True:
     n :int
     try:
         n = input()
+        system('cls')
         if(n == 'exit'): break
         if(n == '1'):
             writeFile()
         elif(n == '2'):
             readFile()
-        else:
-            print('Введите вариант из списка предложенных!')
+        else: raise Exception("Введите вариант из списка предложенных!")
     except Exception as e:
+        system('cls')
         print(e)
